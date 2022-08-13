@@ -1,2 +1,13 @@
 # Fox-Problem
-Solve the Fox Problem using AI
+
+I implemented uninformed search algorithms to solve a simple game in as efficient a manner as possible. The game involves moving an arbitrary number of chickens and foxes from one side of a river to another on a boat that can only carry two animals at a time and without have more foxes than chickens on either side of the river at any given time.
+
+In the first part of the assignment, I implemented a model of states and actions. First, I defined all possible states, legal and illegal. There were 10 total. Then, I developed a checker to parse those states and only return the legal actions at any given time. Actions were rendered illegal in a variety of conditions: (1) there are more foxes than chickens on either side of the river and the number of chickens is not zero, (2) there are less than the minimum value (0) of chickens, foxes, and/or boats, and (3) there are more chickens, foxes, and/or boats than the start state.
+
+If an action and its resulting state did not violate any of these conditions, then it was a legal move. I also defined a function to test if a current state is our goal state (no chickens, foxes, or boats on the starting side of the river).
+
+Next, I had to develop algorithms to search the state/action model in different ways. I first implemented a breadth-first search algorithm. The algorithm searches all nodes on the frontier at once. It uses a set to ensure that no nodes that were already expanded are visited again. Once the goal is reached, the algorithm builds a solution object and returns the path it identified from the root to the goal state. The solution object backchains from the goal object to the root node, grabbing each node’s parent and adding it to the path.
+
+The second search algorithm that I implemented was a recursive and path-checking depth-first search. In comparison to breadth-first search, the depth-first search algorithm keeps track of only states on the path currently being explored and ensures that they are not visited again. In this way, the depth-first search avoids loops. The base cases for my depth-first search were either the maximum depth limit or the goal state and the recursive case executes every time we find a successor not already in our stored path. When we encounter one such successor, the algorithm creates a new node for it and subsequently checks its successors for other children not already in our path. Once the goal state, the depth limit, or no solution is reached, the algorithm returns a solution object.
+
+Lastly, I implemented an iterative-deepening search. This algorithm parallels depth-first search quite a bit, the only difference being that with each recursive search, the depth limit increases to match the frontier instead of just being a constant ceiling. The base case and recursive case are the same, as are the returned solution objects.
